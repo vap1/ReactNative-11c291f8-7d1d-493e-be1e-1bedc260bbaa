@@ -1,9 +1,5 @@
 
-export interface SearchRequest {
-  keyword: string;
-}
-
-export interface User {
+interface User {
   userId: string;
   firstName: string;
   lastName: string;
@@ -12,18 +8,32 @@ export interface User {
   address: string;
 }
 
-export interface DataInputRequest {
+interface DataInputRequest {
   user: User;
 }
 
-export interface DataInputResponse {}
+interface DataInputResponse {}
 
-export interface DataDisplayResponse {
+interface SearchRequest {
+  keyword: string;
+}
+
+interface SearchResponse {
+  searchResults: User[];
+}
+
+interface DataDisplayRequest {}
+
+interface DataDisplayResponse {
   users: User[];
 }
 
-export interface DataDisplayRequest {}
-
-export interface SearchResponse {
-  searchResults: User[];
-}
+export {
+  User,
+  DataInputRequest,
+  DataInputResponse,
+  SearchRequest,
+  SearchResponse,
+  DataDisplayRequest,
+  DataDisplayResponse,
+};
