@@ -20,8 +20,12 @@ const DataInputScreen: React.FC = () => {
         user: user,
       };
 
+      console.log('Data Input Request:', requestData); // Log the data input request
+
       // Call the API to submit the data input
       const response = await postDataInput(requestData);
+
+      console.log('Data Input Response:', response); // Log the data input response
 
       // Display a success message
       Alert.alert('Success', 'Data input submitted successfully.');
