@@ -20,7 +20,7 @@ const DataInputScreen: React.FC = () => {
         user: user,
       };
 
-      // Make API call to submit data input
+      // Make API call to submit data input please
       const response = await postDataInput(requestData);
 
       // Display success message
