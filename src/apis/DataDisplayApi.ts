@@ -9,6 +9,7 @@ export const getDataDisplay = async (): Promise<DataDisplayResponse> => {
     const response = await axios.get<DataDisplayResponse>(BASE_URL);
     return response.data;
   } catch (error) {
+    console.error('Error fetching data display:', error);
     throw new Error('Failed to fetch data display');
   }
 };
@@ -19,6 +20,7 @@ export const dataDisplayApi = async (request: DataDisplayRequest): Promise<DataD
     const response = await getDataDisplay();
     return response;
   } catch (error) {
+    console.error('Error processing data display request:', error);
     throw new Error('Failed to process data display request');
   }
 };
