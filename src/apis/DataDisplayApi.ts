@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { DataDisplayRequest, DataDisplayResponse } from '../types/Types';
 
-const BASE_URL = 'https://0fg9aos700.execute-api.ap-south-1.amazonaws.com/asdfasdf/sample-route-key'; // Replace with your actual API base URL
+const BASE_URL = 'https://api.example.com'; // Replace with your API base URL
 
 export const getDataDisplay = async (): Promise<DataDisplayResponse> => {
   try {
