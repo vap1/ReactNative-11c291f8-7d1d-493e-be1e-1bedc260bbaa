@@ -1,33 +1,44 @@
 
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TextInput, Alert } from 'react-native';
-import { User, SearchRequest, SearchResponse } from '../types/Types';
-import { searchApi } from '../apis/SearchApi';
+import { View, Text, FlatList, TextInput, TouchableOpacity } from 'react-native';
+import { User } from '../types/Types';
+import { getDataDisplay } from '../apis/DataDisplayApi';
+import { search } from '../apis/SearchApi';
 
 const DataDisplayScreen: React.FC = () => {
+  const [users, setUsers] = useState<User[]>([]);
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [searchResults, setSearchResults] = useState<User[]>([]);
 
   useEffect(() => {
-    if (searchKeyword) {
-      performSearch();
-    } else {
-      setSearchResults([]);
-    }
-  }, [searchKeyword]);
+    fetchData();
+  }, []);
 
-  const performSearch = async () => {
+  const fetchData = async () => {
     try {
-      const request: SearchRequest = {
-        keyword: searchKeyword,
-      };
-
-      const response: SearchResponse = await searchApi(request);
-      setSearchResults(response.searchResults);
+      const response = await getDataDisplay();
+      setUsers(response.users);
     } catch (error) {
-      Alert.alert('Error', 'Failed to perform search');
+      console.error('Error fetching data:', error);
     }
   };
+
+  const handleSearch = async () => {
+    try {
+      const response = await search(searchKeyword);
+      setUsers(response.searchResults);
+    } catch (error) {
+      console.error('Error searching data:', error);
+    }
+  };
+
+  const renderItem = ({ item }: { item: User }) => (
+    <View>
+      <Text>{item.firstName} {item.lastName}</Text>
+      <Text>Email: {item.email}</Text>
+      <Text>Phone: {item.phone}</Text>
+      <Text>Address: {item.address}</Text>
+    </View>
+  );
 
   return (
     <View>
@@ -36,17 +47,13 @@ const DataDisplayScreen: React.FC = () => {
         value={searchKeyword}
         onChangeText={setSearchKeyword}
       />
+      <TouchableOpacity onPress={handleSearch}>
+        <Text>Search</Text>
+      </TouchableOpacity>
       <FlatList
-        data={searchResults}
+        data={users}
+        renderItem={renderItem}
         keyExtractor={(item) => item.userId}
-        renderItem={({ item }) => (
-          <View>
-            <Text>{item.firstName} {item.lastName}</Text>
-            <Text>Email: {item.email}</Text>
-            <Text>Phone: {item.phone}</Text>
-            <Text>Address: {item.address}</Text>
-          </View>
-        )}
       />
     </View>
   );
