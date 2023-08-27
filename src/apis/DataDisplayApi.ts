@@ -2,23 +2,17 @@
 import axios from 'axios';
 import { DataDisplayRequest, DataDisplayResponse } from '../types/Types';
 
-const BASE_URL = 'https://api.example.com'; // Replace with your actual API base URL
+const BASE_URL = 'YOUR_API_BASE_URL';
 
-export const getDataDisplay = async (): Promise<DataDisplayResponse> => {
-  try {
-    const response = await axios.get<DataDisplayResponse>(`${BASE_URL}/data-display`);
-    return response.data;
-  } catch (error) {
-    throw new Error('Failed to fetch data display');
-  }
+const DataDisplayApi = {
+  getDataDisplay: async (request: DataDisplayRequest): Promise<DataDisplayResponse> => {
+    try {
+      const response = await axios.get(`${BASE_URL}/data-display`);
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to retrieve data display');
+    }
+  },
 };
 
-export const dataDisplayApi = async (request: DataDisplayRequest): Promise<DataDisplayResponse> => {
-  try {
-    // Perform any necessary data transformations or validations before making the API call
-    const response = await getDataDisplay();
-    return response;
-  } catch (error) {
-    throw new Error('Failed to process data display request');
-  }
-};
+export default DataDisplayApi;
