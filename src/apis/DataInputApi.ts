@@ -2,11 +2,11 @@
 import axios from 'axios';
 import { DataInputRequest, DataInputResponse } from '../types/Types';
 
-const BASE_URL = 'https://api.example.com'; // Replace with your API base URL
+const BASE_URL = 'https://75iaqg7l2j.execute-api.ap-south-1.amazonaws.com/prod'; // Replace with your actual API base URL
 
 export const postDataInput = async (request: DataInputRequest): Promise<DataInputResponse> => {
   try {
-    const response = await axios.post<DataInputResponse>(`${BASE_URL}/data-input`, request);
+    const response = await axios.post<DataInputResponse>(BASE_URL, request);
     return response.data;
   } catch (error) {
     throw new Error('Failed to perform data input');
