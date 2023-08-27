@@ -1,51 +1,56 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, TextInput } from 'react-native';
-import { User, SearchRequest, SearchResponse } from '../types/Types';
-import { searchApi } from '../apis/SearchApi';
+import { View, Text, FlatList, TextInput, TouchableOpacity } from 'react-native';
+import { User } from '../types/Types';
+import { SearchRequest, SearchResponse } from '../apis/SearchApi';
 
-const UserDetailsList: React.FC = () => {
+interface UserDetailsListProps {
+  users: User[];
+}
+
+const UserDetailsList: React.FC<UserDetailsListProps> = ({ users }) => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchResults, setSearchResults] = useState<User[]>([]);
 
   useEffect(() => {
-    if (searchKeyword) {
-      performSearch();
-    } else {
-      setSearchResults([]);
-    }
+    // Function to fetch search results based on the search keyword
+    const fetchSearchResults = async () => {
+      try {
+        const searchRequest: SearchRequest = {
+          keyword: searchKeyword,
+        };
+
+        // Make API call to search for specific information within the user's profile
+        const response: SearchResponse = await searchApiCall(searchRequest);
+
+        setSearchResults(response.searchResults);
+      } catch (error) {
+        console.error('Error fetching search results:', error);
+      }
+    };
+
+    // Call the fetchSearchResults function when the searchKeyword state changes
+    fetchSearchResults();
   }, [searchKeyword]);
-
-  const performSearch = async () => {
-    try {
-      const request: SearchRequest = {
-        keyword: searchKeyword,
-      };
-
-      const response: SearchResponse = await searchApi(request);
-      setSearchResults(response.searchResults);
-    } catch (error) {
-      console.error('Failed to perform search:', error);
-    }
-  };
 
   return (
     <View>
       <TextInput
-        placeholder="Search keyword"
+        placeholder="Search..."
         value={searchKeyword}
         onChangeText={setSearchKeyword}
       />
+
       <FlatList
-        data={searchResults}
+        data={searchKeyword ? searchResults : users}
         keyExtractor={(item) => item.userId}
         renderItem={({ item }) => (
-          <View>
+          <TouchableOpacity>
             <Text>{item.firstName} {item.lastName}</Text>
             <Text>Email: {item.email}</Text>
             <Text>Phone: {item.phone}</Text>
             <Text>Address: {item.address}</Text>
-          </View>
+          </TouchableOpacity>
         )}
       />
     </View>
