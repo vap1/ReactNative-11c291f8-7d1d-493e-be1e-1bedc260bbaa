@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TextInput, TouchableOpacity } from 'react-native';
 import { User } from '../types/Types';
-import { SearchRequest, SearchResponse } from '../apis/SearchApi';
+import { search } from '../apis/SearchApi';
 
 interface UserDetailsListProps {
   users: User[];
@@ -16,13 +16,7 @@ const UserDetailsList: React.FC<UserDetailsListProps> = ({ users }) => {
     // Function to fetch search results based on the search keyword
     const fetchSearchResults = async () => {
       try {
-        const searchRequest: SearchRequest = {
-          keyword: searchKeyword,
-        };
-
-        // Make API call to search for specific information within the user's profile
-        const response: SearchResponse = await searchApiCall(searchRequest);
-
+        const response = await search(searchKeyword);
         setSearchResults(response.searchResults);
       } catch (error) {
         console.error('Error fetching search results:', error);
