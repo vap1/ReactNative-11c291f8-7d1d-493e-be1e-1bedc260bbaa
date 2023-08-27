@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Button } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import { User, DataDisplayResponse } from '../types/Types';
 import { getDataDisplay } from '../apis/DataDisplayApi';
 
@@ -24,8 +24,6 @@ const DataDisplayScreen: React.FC = () => {
 
   return (
     <View>
-      <Button title="Fetch Data" onPress={fetchData} /> // Add a button to trigger the fetchData function
-
       <FlatList
         data={users}
         renderItem={({ item }) => (
