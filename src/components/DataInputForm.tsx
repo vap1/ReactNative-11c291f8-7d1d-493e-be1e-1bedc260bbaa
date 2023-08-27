@@ -1,8 +1,8 @@
 
 import React, { useState } from 'react';
-import { View, TextInput, Button } from 'react-native';
+import { View, TextInput, Button, Alert } from 'react-native';
 import { User, DataInputRequest } from '../types/Types';
-import DataInputApi from '../apis/DataInputApi';
+import { dataInputApi } from '../apis/DataInputApi';
 
 const DataInputForm: React.FC = () => {
   const [user, setUser] = useState<User>({
@@ -14,29 +14,33 @@ const DataInputForm: React.FC = () => {
     address: '',
   });
 
-  const handleInputChange = (key: keyof User, value: string) => {
+  const handleInputChange = (field: keyof User, value: string) => {
     setUser((prevUser) => ({
       ...prevUser,
-      [key]: value,
+      [field]: value,
     }));
   };
 
   const handleSubmit = async () => {
-    const request: DataInputRequest = {
-      user: user,
-    };
-
     try {
-      await DataInputApi.postDataInput(request);
-      // Show success message or navigate to another screen
+      const request: DataInputRequest = {
+        user: user,
+      };
+
+      await dataInputApi(request);
+      Alert.alert('Success', 'Data input successful');
     } catch (error) {
-      console.error('Failed to perform data input:', error);
-      // Show error message to the user
+      Alert.alert('Error', 'Failed to perform data input');
     }
   };
 
   return (
     <View>
+      <TextInput
+        placeholder="User ID"
+        value={user.userId}
+        onChangeText={(value) => handleInputChange('userId', value)}
+      />
       <TextInput
         placeholder="First Name"
         value={user.firstName}
