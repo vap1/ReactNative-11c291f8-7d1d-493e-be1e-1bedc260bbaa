@@ -10,7 +10,7 @@ const DataInputScreen: React.FC = () => {
     firstName: '',
     lastName: '',
     email: '',
-    phone: '',
+    phoneNumber: '', // Updated field name from 'phone' to 'phoneNumber'
     address: '',
   });
 
@@ -54,9 +54,9 @@ const DataInputScreen: React.FC = () => {
         onChangeText={(value) => setUser({ ...user, email: value })}
       />
       <TextInput
-        placeholder="Phone"
-        value={user.phone}
-        onChangeText={(value) => setUser({ ...user, phone: value })}
+        placeholder="Phone Number" // Updated placeholder text
+        value={user.phoneNumber} // Updated field name from 'phone' to 'phoneNumber'
+        onChangeText={(value) => setUser({ ...user, phoneNumber: value })} // Updated field name from 'phone' to 'phoneNumber'
       />
       <TextInput
         placeholder="Address"
