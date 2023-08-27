@@ -8,7 +8,7 @@ export interface User {
   firstName: string;
   lastName: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   address: string;
 }
 
@@ -18,8 +18,11 @@ export interface DataInputRequest {
 
 export interface DataInputResponse {}
 
+
+// {"userDetailsList":[{"userId":"vap1","firstName":"vaibhav","lastName":"vasant","email":"v@gmail.com","phoneNumber":"7633824597","address":"None"}
+// ,{"userId":"vap2","firstName":"vaibhav","lastName":"vasant","email":"v@gmail.com","phoneNumber":"7633824597","address":"None"}]}
 export interface DataDisplayResponse {
-  users: User[];
+  userDetailsList: User[];
 }
 
 export interface DataDisplayRequest {}
