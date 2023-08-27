@@ -10,7 +10,7 @@ const DataInputForm: React.FC = () => {
     firstName: '',
     lastName: '',
     email: '',
-    phone: '',
+    phoneNumber: '', // Updated field name from 'phone' to 'phoneNumber'
     address: '',
   });
 
@@ -32,7 +32,7 @@ const DataInputForm: React.FC = () => {
         firstName: '',
         lastName: '',
         email: '',
-        phone: '',
+        phoneNumber: '', // Updated field name from 'phone' to 'phoneNumber'
         address: '',
       });
     } catch (error) {
@@ -65,8 +65,8 @@ const DataInputForm: React.FC = () => {
       />
       <TextInput
         placeholder="Phone"
-        value={user.phone}
-        onChangeText={(value) => setUser({ ...user, phone: value })}
+        value={user.phoneNumber} // Updated field name from 'phone' to 'phoneNumber'
+        onChangeText={(value) => setUser({ ...user, phoneNumber: value })} // Updated field name from 'phone' to 'phoneNumber'
       />
       <TextInput
         placeholder="Address"
