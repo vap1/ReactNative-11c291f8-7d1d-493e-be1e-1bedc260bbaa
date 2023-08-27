@@ -1,19 +1,19 @@
 
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import DataInputScreen from '../screens/DataInputScreen';
 import DataDisplayScreen from '../screens/DataDisplayScreen';
 
-const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const AppNavigator: React.FC = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="DataInput" component={DataInputScreen} />
-        <Stack.Screen name="DataDisplay" component={DataDisplayScreen} />
-      </Stack.Navigator>
+      <Tab.Navigator>
+        <Tab.Screen name="DataInput" component={DataInputScreen} />
+        <Tab.Screen name="DataDisplay" component={DataDisplayScreen} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 };
