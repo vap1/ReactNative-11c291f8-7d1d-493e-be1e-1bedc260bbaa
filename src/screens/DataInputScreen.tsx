@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Alert } from 'react-native';
 import { DataInputRequest, User } from '../types/Types';
-import { DataInputApi } from '../apis/DataInputApi';
+import { postDataInput } from '../apis/DataInputApi';
 
 const DataInputScreen: React.FC = () => {
   const [user, setUser] = useState<User>({
@@ -20,14 +20,24 @@ const DataInputScreen: React.FC = () => {
         user: user,
       };
 
-      // Make API call to submit data input
-      const response = await DataInputApi.dataInput(requestData);
+      // Call the API to submit the data input
+      const response = await postDataInput(requestData);
 
-      // Display success message
-      Alert.alert('Success', 'Data input submitted successfully');
+      // Display a success message
+      Alert.alert('Success', 'Data input submitted successfully.');
+
+      // Reset the form fields
+      setUser({
+        userId: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: '', // Updated field name from 'phone' to 'phoneNumber'
+        address: '',
+      });
     } catch (error) {
-      // Display error message
-      Alert.alert('Error', 'Failed to submit data input');
+      // Display an error message
+      Alert.alert('Error', 'Failed to submit data input. Please try again.');
     }
   };
 
@@ -54,7 +64,7 @@ const DataInputScreen: React.FC = () => {
         onChangeText={(value) => setUser({ ...user, email: value })}
       />
       <TextInput
-        placeholder="Phone Number" // Updated placeholder text
+        placeholder="Phone"
         value={user.phoneNumber} // Updated field name from 'phone' to 'phoneNumber'
         onChangeText={(value) => setUser({ ...user, phoneNumber: value })} // Updated field name from 'phone' to 'phoneNumber'
       />
