@@ -32,7 +32,7 @@ const DataInputForm: React.FC = () => {
         firstName: '',
         lastName: '',
         email: '',
-        phone: '',
+        phoneNumber: '',
         address: '',
       });
     } catch (error) {
@@ -65,7 +65,7 @@ const DataInputForm: React.FC = () => {
       />
       <TextInput
         placeholder="Phone"
-        value={user.phone}
+        value={user.phoneNumber}
         onChangeText={(value) => setUser({ ...user, phone: value })}
       />
       <TextInput
