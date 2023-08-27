@@ -6,11 +6,11 @@ import { postDataInput } from '../apis/DataInputApi';
 
 const DataInputForm: React.FC = () => {
   const [user, setUser] = useState<User>({
-    userId: '',
+    userId: Math.random().toString(36).substring(7), // Set a random userId before submitting
     firstName: '',
     lastName: '',
     email: '',
-    phoneNumber: '', // Updated field name from 'phone' to 'phoneNumber'
+    phoneNumber: '',
     address: '',
   });
 
@@ -20,19 +20,23 @@ const DataInputForm: React.FC = () => {
         user: user,
       };
 
+      console.log('Data Input Request:', requestData); // Log the data input request
+
       // Call the API to submit the data input
       const response = await postDataInput(requestData);
+
+      console.log('Data Input Response:', response); // Log the data input response
 
       // Display a success message
       Alert.alert('Success', 'Data input submitted successfully.');
 
       // Reset the form fields
       setUser({
-        userId: '',
+        userId: Math.random().toString(36).substring(7), // Set a new random userId
         firstName: '',
         lastName: '',
         email: '',
-        phoneNumber: '', // Updated field name from 'phone' to 'phoneNumber'
+        phoneNumber: '',
         address: '',
       });
     } catch (error) {
@@ -65,8 +69,8 @@ const DataInputForm: React.FC = () => {
       />
       <TextInput
         placeholder="Phone"
-        value={user.phoneNumber} // Updated field name from 'phone' to 'phoneNumber'
-        onChangeText={(value) => setUser({ ...user, phoneNumber: value })} // Updated field name from 'phone' to 'phoneNumber'
+        value={user.phoneNumber}
+        onChangeText={(value) => setUser({ ...user, phoneNumber: value })}
       />
       <TextInput
         placeholder="Address"
