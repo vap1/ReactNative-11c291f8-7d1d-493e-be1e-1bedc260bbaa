@@ -7,6 +7,7 @@ const BASE_URL = 'https://75iaqg7l2j.execute-api.ap-south-1.amazonaws.com/prod';
 export const postDataInput = async (request: DataInputRequest): Promise<DataInputResponse> => {
   try {
     const response = await axios.post<DataInputResponse>(BASE_URL, request);
+    console.log('Data Input Response:', response.data); // Log the data input response
     return response.data;
   } catch (error) {
     console.error('Error performing data input:', error); // Log the error
