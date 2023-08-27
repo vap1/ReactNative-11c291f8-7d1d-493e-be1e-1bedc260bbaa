@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Alert } from 'react-native';
 import { DataInputRequest, User } from '../types/Types';
-import { postDataInput } from '../apis/DataInputApi';
+import { DataInputApi } from '../apis/DataInputApi';
 
 const DataInputScreen: React.FC = () => {
   const [user, setUser] = useState<User>({
@@ -20,8 +20,8 @@ const DataInputScreen: React.FC = () => {
         user: user,
       };
 
-      // Make API call to submit data input please
-      const response = await postDataInput(requestData);
+      // Make API call to submit data input
+      const response = await DataInputApi.dataInput(requestData);
 
       // Display success message
       Alert.alert('Success', 'Data input submitted successfully');
