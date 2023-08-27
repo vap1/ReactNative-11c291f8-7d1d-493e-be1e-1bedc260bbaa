@@ -66,7 +66,7 @@ const DataInputForm: React.FC = () => {
       <TextInput
         placeholder="Phone"
         value={user.phoneNumber}
-        onChangeText={(value) => setUser({ ...user, phone: value })}
+        onChangeText={(value) => setUser({ ...user, phoneNumber: value })}
       />
       <TextInput
         placeholder="Address"
