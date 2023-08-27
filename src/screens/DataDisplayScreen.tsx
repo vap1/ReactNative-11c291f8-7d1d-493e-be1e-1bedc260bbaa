@@ -1,30 +1,33 @@
 
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TextInput } from 'react-native';
+import { View, Text, FlatList, TextInput, Alert } from 'react-native';
 import { User, SearchRequest, SearchResponse } from '../types/Types';
-import SearchApi from '../apis/SearchApi';
+import { searchApi } from '../apis/SearchApi';
 
 const DataDisplayScreen: React.FC = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchResults, setSearchResults] = useState<User[]>([]);
 
-  const handleSearch = async () => {
-    const request: SearchRequest = {
-      keyword: searchKeyword,
-    };
+  useEffect(() => {
+    if (searchKeyword) {
+      performSearch();
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchKeyword]);
 
+  const performSearch = async () => {
     try {
-      const response: SearchResponse = await SearchApi.searchKeyword(request);
+      const request: SearchRequest = {
+        keyword: searchKeyword,
+      };
+
+      const response: SearchResponse = await searchApi(request);
       setSearchResults(response.searchResults);
     } catch (error) {
-      console.error('Failed to perform search:', error);
-      // Show error message to the user
+      Alert.alert('Error', 'Failed to perform search');
     }
   };
-
-  useEffect(() => {
-    handleSearch();
-  }, []);
 
   return (
     <View>
@@ -32,7 +35,6 @@ const DataDisplayScreen: React.FC = () => {
         placeholder="Search keyword"
         value={searchKeyword}
         onChangeText={setSearchKeyword}
-        onSubmitEditing={handleSearch}
       />
       <FlatList
         data={searchResults}
