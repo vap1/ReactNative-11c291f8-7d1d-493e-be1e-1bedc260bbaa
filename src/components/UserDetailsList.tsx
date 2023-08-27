@@ -2,29 +2,32 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TextInput } from 'react-native';
 import { User, SearchRequest, SearchResponse } from '../types/Types';
-import SearchApi from '../apis/SearchApi';
+import { searchApi } from '../apis/SearchApi';
 
 const UserDetailsList: React.FC = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchResults, setSearchResults] = useState<User[]>([]);
 
-  const handleSearch = async () => {
-    const request: SearchRequest = {
-      keyword: searchKeyword,
-    };
+  useEffect(() => {
+    if (searchKeyword) {
+      performSearch();
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchKeyword]);
 
+  const performSearch = async () => {
     try {
-      const response: SearchResponse = await SearchApi.searchKeyword(request);
+      const request: SearchRequest = {
+        keyword: searchKeyword,
+      };
+
+      const response: SearchResponse = await searchApi(request);
       setSearchResults(response.searchResults);
     } catch (error) {
       console.error('Failed to perform search:', error);
-      // Show error message to the user
     }
   };
-
-  useEffect(() => {
-    handleSearch();
-  }, []);
 
   return (
     <View>
@@ -32,7 +35,6 @@ const UserDetailsList: React.FC = () => {
         placeholder="Search keyword"
         value={searchKeyword}
         onChangeText={setSearchKeyword}
-        onSubmitEditing={handleSearch}
       />
       <FlatList
         data={searchResults}
