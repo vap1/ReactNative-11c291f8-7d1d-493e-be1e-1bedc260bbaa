@@ -10,7 +10,7 @@ const DataInputForm: React.FC = () => {
     firstName: '',
     lastName: '',
     email: '',
-    phone: '',
+    phoneNumber: '',
     address: '',
   });
 
