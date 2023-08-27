@@ -19,7 +19,7 @@ export interface DataInputRequest {
 export interface DataInputResponse {}
 
 export interface DataDisplayResponse {
-  users: User[];
+  userDetailsList: User[];
 }
 
 export interface DataDisplayRequest {}
