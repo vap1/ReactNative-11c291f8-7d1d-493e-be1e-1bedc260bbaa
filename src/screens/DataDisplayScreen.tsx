@@ -35,7 +35,7 @@ const DataDisplayScreen: React.FC = () => {
     <View>
       <Text>{item.firstName} {item.lastName}</Text>
       <Text>Email: {item.email}</Text>
-      <Text>Phone: {item.phone}</Text>
+      <Text>Phone: {item.phoneNumber}</Text>
       <Text>Address: {item.address}</Text>
     </View>
   );
