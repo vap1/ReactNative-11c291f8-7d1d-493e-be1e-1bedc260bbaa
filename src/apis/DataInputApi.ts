@@ -9,6 +9,7 @@ export const postDataInput = async (request: DataInputRequest): Promise<DataInpu
     const response = await axios.post<DataInputResponse>(BASE_URL, request);
     return response.data;
   } catch (error) {
+    console.error('Error performing data input:', error); // Log the error
     throw new Error('Failed to perform data input');
   }
 };
