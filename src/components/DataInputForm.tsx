@@ -1,43 +1,37 @@
 
 import React, { useState } from 'react';
-import { View, TextInput, Button, Alert } from 'react-native';
-import { DataInputRequest } from '../types/Types';
-import { postDataInput } from '../apis/DataInputApi';
+import { View, TextInput, Button } from 'react-native';
+import { User, DataInputRequest } from '../types/Types';
+import DataInputApi from '../apis/DataInputApi';
 
 const DataInputForm: React.FC = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
+  const [user, setUser] = useState<User>({
+    userId: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    address: '',
+  });
 
-  const handleDataInput = async () => {
+  const handleInputChange = (key: keyof User, value: string) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      [key]: value,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    const request: DataInputRequest = {
+      user: user,
+    };
+
     try {
-      const requestData: DataInputRequest = {
-        user: {
-          firstName,
-          lastName,
-          email,
-          phone,
-          address,
-        },
-      };
-
-      // Call the API to submit the data input
-      const response = await postDataInput(requestData);
-
-      // Display a success message
-      Alert.alert('Success', 'Data input submitted successfully.');
-
-      // Reset the form fields
-      setFirstName('');
-      setLastName('');
-      setEmail('');
-      setPhone('');
-      setAddress('');
+      await DataInputApi.postDataInput(request);
+      // Show success message or navigate to another screen
     } catch (error) {
-      // Display an error message
-      Alert.alert('Error', 'Failed to submit data input. Please try again.');
+      console.error('Failed to perform data input:', error);
+      // Show error message to the user
     }
   };
 
@@ -45,30 +39,30 @@ const DataInputForm: React.FC = () => {
     <View>
       <TextInput
         placeholder="First Name"
-        value={firstName}
-        onChangeText={setFirstName}
+        value={user.firstName}
+        onChangeText={(value) => handleInputChange('firstName', value)}
       />
       <TextInput
         placeholder="Last Name"
-        value={lastName}
-        onChangeText={setLastName}
+        value={user.lastName}
+        onChangeText={(value) => handleInputChange('lastName', value)}
       />
       <TextInput
         placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
+        value={user.email}
+        onChangeText={(value) => handleInputChange('email', value)}
       />
       <TextInput
         placeholder="Phone"
-        value={phone}
-        onChangeText={setPhone}
+        value={user.phone}
+        onChangeText={(value) => handleInputChange('phone', value)}
       />
       <TextInput
         placeholder="Address"
-        value={address}
-        onChangeText={setAddress}
+        value={user.address}
+        onChangeText={(value) => handleInputChange('address', value)}
       />
-      <Button title="Submit" onPress={handleDataInput} />
+      <Button title="Submit" onPress={handleSubmit} />
     </View>
   );
 };
